@@ -1,13 +1,17 @@
 import React from 'react';
 
-function Table({columns, data, tableDescriptor}) {
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function Table({columns, data, tableDescriptor, onDeleteRecord}) {
     return (
-        <table className="table table-dark">
+        <table className="table table-striped table-dark">
             <thead>
             <tr>
                 <th scope="col">{tableDescriptor}</th>
                 {columns.map(columnTitle => (
-                    <th key={columnTitle} scope="col">{columnTitle}</th>
+                    <th key={columnTitle} scope="col">{capitalizeFirstLetter(columnTitle)}</th>
                 ))}
             </tr>
             </thead>
@@ -18,6 +22,7 @@ function Table({columns, data, tableDescriptor}) {
                     {columns.map(columnTitle => (
                         <td key={item[columnTitle]+columnTitle}>{item[columnTitle]}</td>
                     ))}
+                    <td><button type="button" class="btn btn-danger float-right" onClick={() => onDeleteRecord(item.id)}>Delete</button></td>
                 </tr>
             ))}
             </tbody>
